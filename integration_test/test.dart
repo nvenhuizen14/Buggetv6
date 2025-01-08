@@ -40,16 +40,16 @@ void main() async {
 
     await tester.pumpWidget(ChangeNotifierProvider(
       create: (context) => FFAppState(),
-      child: const MyApp(),
+      child: MyApp(),
     ));
 
-    await tester.pumpAndSettle(const Duration(milliseconds: 500));
+    await tester.pumpAndSettle(Duration(milliseconds: 500));
     await tester.scrollUntilVisible(
-      find.byKey(const ValueKey('12')),
+      find.byKey(ValueKey('12')),
       100.0,
       scrollable: find
           .descendant(
-            of: find.byKey(const ValueKey('12')),
+            of: find.byKey(ValueKey('12')),
             matching: find.byType(Scrollable),
           )
           .first,
