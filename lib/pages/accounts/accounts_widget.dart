@@ -1,3 +1,5 @@
+import '/auth/supabase_auth/auth_util.dart';
+import '/backend/api_requests/api_calls.dart';
 import '/backend/supabase/supabase.dart';
 import '/components/account_card/account_card_widget.dart';
 import '/components/nav_bar_floting/nav_bar_floting_widget.dart';
@@ -5,13 +7,16 @@ import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import '/walkthroughs/accounts.dart';
+import '/custom_code/actions/index.dart' as actions;
+import 'package:tutorial_coach_mark/tutorial_coach_mark.dart'
+    show TutorialCoachMark;
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'accounts_model.dart';
 export 'accounts_model.dart';
-import '../../services/plaid_service.dart';
 
 class AccountsWidget extends StatefulWidget {
   const AccountsWidget({super.key});
@@ -22,14 +27,14 @@ class AccountsWidget extends StatefulWidget {
 
 class _AccountsWidgetState extends State<AccountsWidget> {
   late AccountsModel _model;
-  final PlaidService _plaidService = PlaidService();
+
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
     _model = createModel(context, () => AccountsModel());
-    _plaidService.initializePlaid(); // Initialize the Plaid Service
+
     logFirebaseEvent('screen_view', parameters: {'screen_name': 'Accounts'});
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
@@ -37,19 +42,10 @@ class _AccountsWidgetState extends State<AccountsWidget> {
   @override
   void dispose() {
     _model.dispose();
-    _plaidService.dispose();
+
     super.dispose();
   }
 
-     void openPlaidLink() async {
-    String? linkToken = await _plaidService.fetchLinkToken();
-    if (linkToken != null) {
-      _plaidService.openPlaidLink(linkToken);
-    } else {
-      // Handle the error scenario
-    }
-  }
-  
   @override
   Widget build(BuildContext context) {
     return Title(
@@ -298,6 +294,9 @@ class _AccountsWidgetState extends State<AccountsWidget> {
                                             ),
                                           );
                                         },
+                                      ).addWalkthrough(
+                                        listViewWrwfhlxb,
+                                        _model.accountsController,
                                       );
                                     },
                                   ),
@@ -351,24 +350,70 @@ class _AccountsWidgetState extends State<AccountsWidget> {
                                               alignment: const AlignmentDirectional(
                                                   0.0, 0.0),
                                               child: FFButtonWidget(
-                                            onPressed: () {
-                                               openPlaidLink();
-                                            },
-                                            text: '',
-                                            icon: const Icon(
-                                              Icons.account_circle,
-                                              size: 60.0,
-                                            ),
-                                            options: FFButtonOptions(
-                                              height: 206.0,
-                                              padding: const EdgeInsetsDirectional
-                                                  .fromSTEB(
-                                                      24.0, 0.0, 24.0, 0.0),
-                                              iconPadding: const EdgeInsetsDirectional
-                                                  .fromSTEB(0.0, 0.0, 0.0, 0.0),
-                                              color: const Color(0x62550F04),
-                                              textStyle:
-                                                  FlutterFlowTheme.of(context)
+                                                onPressed: () async {
+                                                  logFirebaseEvent(
+                                                      'ACCOUNTS_PAGE__BTN_ON_TAP');
+                                                  logFirebaseEvent(
+                                                      'Button_backend_call');
+                                                  _model.linkToken =
+                                                      await PlaidGroup
+                                                          .createTokenCall
+                                                          .call(
+                                                    userId: currentUserUid,
+                                                  );
+
+                                                  logFirebaseEvent(
+                                                      'Button_custom_action');
+                                                  await actions.initPlaidLink(
+                                                    context,
+                                                    valueOrDefault<String>(
+                                                      PlaidGroup.createTokenCall
+                                                          .linkToken(
+                                                        (_model.linkToken
+                                                                ?.jsonBody ??
+                                                            ''),
+                                                      ),
+                                                      'linkToken',
+                                                    ),
+                                                    (publicToken) async {
+                                                      logFirebaseEvent(
+                                                          '_backend_call');
+                                                      _model.exchangeToken =
+                                                          await BackendExchangeTokenCall
+                                                              .call(
+                                                        publicToken:
+                                                            publicToken,
+                                                        userId: currentUserUid,
+                                                      );
+                                                    },
+                                                  );
+
+                                                  safeSetState(() {});
+                                                },
+                                                text: '',
+                                                icon: const Icon(
+                                                  Icons.account_circle,
+                                                  size: 55.0,
+                                                ),
+                                                options: FFButtonOptions(
+                                                  width:
+                                                      MediaQuery.sizeOf(context)
+                                                              .width *
+                                                          1.0,
+                                                  height:
+                                                      MediaQuery.sizeOf(context)
+                                                              .height *
+                                                          1.0,
+                                                  padding: const EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                          24.0, 0.0, 24.0, 0.0),
+                                                  iconPadding:
+                                                      const EdgeInsetsDirectional
+                                                          .fromSTEB(0.0, 0.0,
+                                                              0.0, 0.0),
+                                                  color: const Color(0x62550F04),
+                                                  textStyle: FlutterFlowTheme
+                                                          .of(context)
                                                       .titleSmall
                                                       .override(
                                                         fontFamily: 'Oswald',
@@ -377,25 +422,25 @@ class _AccountsWidgetState extends State<AccountsWidget> {
                                                                     context)
                                                                 .primaryText,
                                                         fontSize: 24.0,
-                                                        useGoogleFonts: GoogleFonts
-                                                                .asMap()
-                                                            .containsKey(
-                                                                FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .titleSmallFamily),
+                                                        letterSpacing: 0.0,
+                                                        useGoogleFonts:
+                                                            GoogleFonts.asMap()
+                                                                .containsKey(
+                                                                    'Oswald'),
                                                       ),
-                                              elevation: 3.0,
-                                              borderSide: BorderSide(
-                                                color:
-                                                    FlutterFlowTheme.of(context)
+                                                  elevation: 3.0,
+                                                  borderSide: BorderSide(
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
                                                         .lineColor,
-                                                width: 6.0,
+                                                    width: 6.0,
+                                                  ),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          15.0),
+                                                  hoverColor: const Color(0x7930686E),
+                                                ),
                                               ),
-                                              borderRadius:
-                                                  BorderRadius.circular(15.0),
-                                              hoverColor: const Color(0x7930686E),
-                                            ),
-                                          ),
                                             ),
                                           ),
                                         ),
@@ -486,6 +531,9 @@ class _AccountsWidgetState extends State<AccountsWidget> {
                                                           16.0),
                                                   hoverColor: const Color(0x7930686E),
                                                 ),
+                                              ).addWalkthrough(
+                                                button68pfkw8y,
+                                                _model.accountsController,
                                               ),
                                             ),
                                           ),
@@ -698,4 +746,15 @@ class _AccountsWidgetState extends State<AccountsWidget> {
           ),
         ));
   }
+
+  TutorialCoachMark createPageWalkthrough(BuildContext context) =>
+      TutorialCoachMark(
+        targets: createWalkthroughTargets(context),
+        onFinish: () async {
+          safeSetState(() => _model.accountsController = null);
+        },
+        onSkip: () {
+          return true;
+        },
+      );
 }
