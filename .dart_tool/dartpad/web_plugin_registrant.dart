@@ -14,6 +14,7 @@ import 'package:firebase_core_web/firebase_core_web.dart';
 import 'package:flutter_secure_storage_web/flutter_secure_storage_web.dart';
 import 'package:plaid_flutter/src/platform/plaid_flutter_web.dart';
 import 'package:pointer_interceptor_web/pointer_interceptor_web.dart';
+import 'package:rive_common/rive_web.dart';
 import 'package:shared_preferences_web/shared_preferences_web.dart';
 import 'package:sign_in_with_apple_web/sign_in_with_apple_web.dart';
 import 'package:url_launcher_web/url_launcher_web.dart';
@@ -29,6 +30,7 @@ void registerPlugins([final Registrar? pluginRegistrar]) {
   FlutterSecureStorageWeb.registerWith(registrar);
   PlaidFlutterPlugin.registerWith(registrar);
   PointerInterceptorWeb.registerWith(registrar);
+  RivePlugin.registerWith(registrar);
   SharedPreferencesPlugin.registerWith(registrar);
   SignInWithApplePlugin.registerWith(registrar);
   UrlLauncherPlugin.registerWith(registrar);

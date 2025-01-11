@@ -410,6 +410,12 @@
       "languageVersion": "3.0"
     },
     {
+      "name": "graphs",
+      "rootUri": "file:///C:/Users/nvenh/AppData/Local/Pub/Cache/hosted/pub.dev/graphs-2.3.2",
+      "packageUri": "lib/",
+      "languageVersion": "3.4"
+    },
+    {
       "name": "gtk",
       "rootUri": "file:///C:/Users/nvenh/AppData/Local/Pub/Cache/hosted/pub.dev/gtk-2.1.0",
       "packageUri": "lib/",
@@ -696,6 +702,18 @@
       "rootUri": "file:///C:/Users/nvenh/AppData/Local/Pub/Cache/hosted/pub.dev/rfc_6901-0.2.0",
       "packageUri": "lib/",
       "languageVersion": "3.0"
+    },
+    {
+      "name": "rive",
+      "rootUri": "file:///C:/Users/nvenh/AppData/Local/Pub/Cache/hosted/pub.dev/rive-0.12.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.17"
+    },
+    {
+      "name": "rive_common",
+      "rootUri": "file:///C:/Users/nvenh/AppData/Local/Pub/Cache/hosted/pub.dev/rive_common-0.2.8",
+      "packageUri": "lib/",
+      "languageVersion": "2.17"
     },
     {
       "name": "rxdart",
@@ -1076,7 +1094,7 @@
       "languageVersion": "3.0"
     }
   ],
-  "generated": "2025-01-11T06:18:37.132225Z",
+  "generated": "2025-01-11T16:21:28.902518Z",
   "generator": "pub",
   "generatorVersion": "3.5.2",
   "flutterRoot": "file:///C:/Users/nvenh/AppData/Roaming/FlutterFlow/flutterflow/flutter",
