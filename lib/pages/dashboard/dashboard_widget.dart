@@ -2784,40 +2784,54 @@ class _DashboardWidgetState extends State<DashboardWidget>
                                                   return Padding(
                                                     padding:
                                                         const EdgeInsets.all(5.0),
-                                                    child: BudgetListTileWidget(
-                                                      key: Key(
-                                                          'Keygvw_${gridViewIndex}_of_${gridViewBudgetingRowList.length}'),
-                                                      budgetItem:
-                                                          valueOrDefault<
-                                                              String>(
+                                                    child: wrapWithModel(
+                                                      model: _model
+                                                          .budgetListTileModels
+                                                          .getModel(
                                                         gridViewBudgetingRow
-                                                            .budgetItem,
-                                                        'null',
+                                                            .budgetItem!,
+                                                        gridViewIndex,
                                                       ),
-                                                      countOfTransactions:
-                                                          valueOrDefault<int>(
-                                                        gridViewBudgetingRow
-                                                            .transactionCount,
-                                                        1,
-                                                      ),
-                                                      spent: valueOrDefault<
-                                                          double>(
-                                                        gridViewBudgetingRow
-                                                            .budgetPercentage,
-                                                        1.0,
-                                                      ),
-                                                      budget: valueOrDefault<
-                                                          double>(
-                                                        gridViewBudgetingRow
-                                                            .budgetLimit,
-                                                        1.0,
-                                                      ),
-                                                      budgetGroup:
-                                                          valueOrDefault<
-                                                              String>(
-                                                        gridViewBudgetingRow
-                                                            .group,
-                                                        'null',
+                                                      updateCallback: () =>
+                                                          safeSetState(() {}),
+                                                      updateOnChange: true,
+                                                      child:
+                                                          BudgetListTileWidget(
+                                                        key: Key(
+                                                          'Keygvw_${gridViewBudgetingRow.budgetItem!}',
+                                                        ),
+                                                        budgetItem:
+                                                            valueOrDefault<
+                                                                String>(
+                                                          gridViewBudgetingRow
+                                                              .budgetItem,
+                                                          'null',
+                                                        ),
+                                                        countOfTransactions:
+                                                            valueOrDefault<int>(
+                                                          gridViewBudgetingRow
+                                                              .transactionCount,
+                                                          1,
+                                                        ),
+                                                        spent: valueOrDefault<
+                                                            double>(
+                                                          gridViewBudgetingRow
+                                                              .budgetPercentage,
+                                                          1.0,
+                                                        ),
+                                                        budget: valueOrDefault<
+                                                            double>(
+                                                          gridViewBudgetingRow
+                                                              .budgetLimit,
+                                                          1.0,
+                                                        ),
+                                                        budgetGroup:
+                                                            valueOrDefault<
+                                                                String>(
+                                                          gridViewBudgetingRow
+                                                              .group,
+                                                          'null',
+                                                        ),
                                                       ),
                                                     ),
                                                   );

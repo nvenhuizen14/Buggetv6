@@ -342,7 +342,7 @@ class _BudgetsWidgetState extends State<BudgetsWidget>
                                       size: 25.0,
                                     ),
                                     title: Text(
-                                      'Custom Rules',
+                                      'Transaction Rules',
                                       textAlign: TextAlign.start,
                                       style: FlutterFlowTheme.of(context)
                                           .titleLarge

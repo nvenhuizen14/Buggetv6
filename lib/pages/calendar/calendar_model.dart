@@ -1,4 +1,4 @@
-import '/components/custom_calendar/custom_calendar/custom_calendar_widget.dart';
+import '/components/custom_calendar/my_custom_calendar/my_custom_calendar_widget.dart';
 import '/flutter_flow/flutter_flow_calendar.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'calendar_widget.dart' show CalendarWidget;
@@ -18,14 +18,14 @@ class CalendarModel extends FlutterFlowModel<CalendarWidget> {
   int get tabBarCurrentIndex =>
       tabBarController != null ? tabBarController!.index : 0;
 
-  // Model for CustomCalendar component.
-  late CustomCalendarModel customCalendarModel;
+  // Model for MyCustomCalendar component.
+  late MyCustomCalendarModel myCustomCalendarModel;
   // State field(s) for Calendar widget.
   DateTimeRange? calendarSelectedDay;
 
   @override
   void initState(BuildContext context) {
-    customCalendarModel = createModel(context, () => CustomCalendarModel());
+    myCustomCalendarModel = createModel(context, () => MyCustomCalendarModel());
     calendarSelectedDay = DateTimeRange(
       start: DateTime.now().startOfDay,
       end: DateTime.now().endOfDay,
@@ -35,6 +35,6 @@ class CalendarModel extends FlutterFlowModel<CalendarWidget> {
   @override
   void dispose() {
     tabBarController?.dispose();
-    customCalendarModel.dispose();
+    myCustomCalendarModel.dispose();
   }
 }
