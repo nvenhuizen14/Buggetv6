@@ -1,3 +1,4 @@
+import '/auth/supabase_auth/auth_util.dart'; // For Supabase-based authentication
 import '/backend/supabase/supabase.dart';
 import '/components/account_card/account_card_widget.dart';
 import '/components/nav_bar_floting/nav_bar_floting_widget.dart';
