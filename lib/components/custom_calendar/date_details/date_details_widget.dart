@@ -4,7 +4,6 @@ import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'dart:ui';
-import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -16,9 +15,11 @@ class DateDetailsWidget extends StatefulWidget {
   const DateDetailsWidget({
     super.key,
     this.selectedDate,
+    required this.timeSegments,
   });
 
   final DateTime? selectedDate;
+  final List<DateTime>? timeSegments;
 
   @override
   State<DateDetailsWidget> createState() => _DateDetailsWidgetState();
@@ -174,11 +175,8 @@ class _DateDetailsWidgetState extends State<DateDetailsWidget> {
                           padding: const EdgeInsets.all(12.0),
                           child: Builder(
                             builder: (context) {
-                              final timeSegments = functions
-                                  .generateTimeSegments(
-                                      widget.selectedDate!, _model.zoomLevel!)
-                                  .map((e) => e)
-                                  .toList();
+                              final timeSegments =
+                                  widget.timeSegments!.map((e) => e).toList();
 
                               return ListView.separated(
                                 padding: EdgeInsets.zero,
@@ -195,11 +193,13 @@ class _DateDetailsWidgetState extends State<DateDetailsWidget> {
                                   return Align(
                                     alignment: const AlignmentDirectional(0.0, 0.0),
                                     child: FutureBuilder<List<EventRow>>(
-                                      future: EventTable().queryRows(
-                                        queryFn: (q) => q.eqOrNull(
-                                          'startDate',
-                                          supaSerialize<DateTime>(
-                                              widget.selectedDate),
+                                      future: _model.eventQuery(
+                                        requestFn: () => EventTable().queryRows(
+                                          queryFn: (q) => q.eqOrNull(
+                                            'startDate',
+                                            supaSerialize<DateTime>(
+                                                widget.selectedDate),
+                                          ),
                                         ),
                                       ),
                                       builder: (context, snapshot) {

@@ -1,9 +1,9 @@
 import '/components/custom_calendar/calendar_weekday/calendar_weekday_widget.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import 'custom_calendar_widget.dart' show CustomCalendarWidget;
+import 'my_custom_calendar_widget.dart' show MyCustomCalendarWidget;
 import 'package:flutter/material.dart';
 
-class CustomCalendarModel extends FlutterFlowModel<CustomCalendarWidget> {
+class MyCustomCalendarModel extends FlutterFlowModel<MyCustomCalendarWidget> {
   ///  Local state fields for this component.
 
   DateTime? selectedDate;

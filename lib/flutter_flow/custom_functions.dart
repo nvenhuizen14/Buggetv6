@@ -234,3 +234,17 @@ List<DateTime> generateTimeSegments(
   }
   return timeSegments;
 }
+
+List<String> generateTimeSegments2(
+  DateTime selectedDate,
+  int zoomLevel,
+) {
+  List<String> timeSegments = [];
+  int interval = {1: 60, 2: 30, 3: 15, 4: 5}[zoomLevel] ?? 15;
+  for (int i = 0; i < (24 * 60) ~/ interval; i++) {
+    DateTime time = selectedDate.add(Duration(minutes: i * interval));
+    timeSegments.add(
+        "${time.hour.toString().padLeft(2, '0')}:${time.minute.toString().padLeft(2, '0')}");
+  }
+  return timeSegments;
+}
