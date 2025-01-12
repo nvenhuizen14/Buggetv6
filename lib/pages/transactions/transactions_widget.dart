@@ -142,22 +142,24 @@ class _TransactionsWidgetState extends State<TransactionsWidget>
               ),
               actions: const [],
               flexibleSpace: FlexibleSpaceBar(
-                title: Text(
-                  'Transactions',
-                  style: FlutterFlowTheme.of(context).headlineMedium.override(
-                        fontFamily:
-                            FlutterFlowTheme.of(context).headlineMediumFamily,
-                        color: FlutterFlowTheme.of(context).btnText,
-                        fontSize: 22.0,
-                        letterSpacing: 0.0,
-                        useGoogleFonts: GoogleFonts.asMap().containsKey(
-                            FlutterFlowTheme.of(context).headlineMediumFamily),
-                      ),
+                title: Align(
+                  alignment: const AlignmentDirectional(0.0, 0.0),
+                  child: Text(
+                    'Transactions',
+                    style: FlutterFlowTheme.of(context).headlineMedium.override(
+                          fontFamily:
+                              FlutterFlowTheme.of(context).headlineMediumFamily,
+                          color: FlutterFlowTheme.of(context).btnText,
+                          fontSize: 22.0,
+                          letterSpacing: 0.0,
+                          useGoogleFonts: GoogleFonts.asMap().containsKey(
+                              FlutterFlowTheme.of(context)
+                                  .headlineMediumFamily),
+                        ),
+                  ),
                 ),
                 centerTitle: true,
                 expandedTitleScale: 1.0,
-                titlePadding:
-                    const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 20.0),
               ),
               elevation: 2.0,
             ),
@@ -168,58 +170,140 @@ class _TransactionsWidgetState extends State<TransactionsWidget>
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Row(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Align(
-                        alignment: const AlignmentDirectional(-1.0, -1.0),
-                        child: Container(
-                          constraints: BoxConstraints(
-                            minWidth: MediaQuery.sizeOf(context).width * 0.5,
-                            maxWidth: MediaQuery.sizeOf(context).width * 0.5,
+                  Padding(
+                    padding:
+                        const EdgeInsetsDirectional.fromSTEB(0.0, 10.0, 0.0, 0.0),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Align(
+                          alignment: const AlignmentDirectional(-1.0, -1.0),
+                          child: Container(
+                            constraints: BoxConstraints(
+                              minWidth: MediaQuery.sizeOf(context).width * 0.5,
+                              maxWidth: MediaQuery.sizeOf(context).width * 0.5,
+                            ),
+                            decoration: const BoxDecoration(
+                              color: Colors.transparent,
+                            ),
+                            alignment: const AlignmentDirectional(0.0, 0.0),
+                            child: Align(
+                              alignment: const AlignmentDirectional(0.0, 0.0),
+                              child: Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    15.0, 0.0, 5.0, 0.0),
+                                child: FFButtonWidget(
+                                  onPressed: () async {
+                                    logFirebaseEvent(
+                                        'TRANSACTIONS_PAGE_START_DATE_BTN_ON_TAP');
+                                    logFirebaseEvent('Button_date_time_picker');
+                                    final datePicked1Date =
+                                        await showDatePicker(
+                                      context: context,
+                                      initialDate:
+                                          (functions.todayminus14days() ??
+                                              DateTime.now()),
+                                      firstDate: DateTime(1900),
+                                      lastDate: DateTime(2050),
+                                    );
+
+                                    if (datePicked1Date != null) {
+                                      safeSetState(() {
+                                        _model.datePicked1 = DateTime(
+                                          datePicked1Date.year,
+                                          datePicked1Date.month,
+                                          datePicked1Date.day,
+                                        );
+                                      });
+                                    }
+                                    logFirebaseEvent(
+                                        'Button_update_page_state');
+                                    _model.startDate = _model.datePicked1;
+                                    safeSetState(() {});
+                                    logFirebaseEvent('Button_update_app_state');
+                                    FFAppState().startdate = _model.datePicked1;
+                                    safeSetState(() {});
+                                  },
+                                  text: 'Start Date',
+                                  icon: const Icon(
+                                    Icons.date_range,
+                                    size: 15.0,
+                                  ),
+                                  options: FFButtonOptions(
+                                    width: 235.0,
+                                    height: 40.0,
+                                    padding: const EdgeInsets.all(0.0),
+                                    iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 0.0, 0.0, 0.0),
+                                    color: Colors.transparent,
+                                    textStyle: FlutterFlowTheme.of(context)
+                                        .titleSmall
+                                        .override(
+                                          fontFamily:
+                                              FlutterFlowTheme.of(context)
+                                                  .titleSmallFamily,
+                                          color: FlutterFlowTheme.of(context)
+                                              .grayIcon,
+                                          letterSpacing: 0.0,
+                                          useGoogleFonts: GoogleFonts.asMap()
+                                              .containsKey(
+                                                  FlutterFlowTheme.of(context)
+                                                      .titleSmallFamily),
+                                        ),
+                                    elevation: 3.0,
+                                    borderSide: BorderSide(
+                                      color:
+                                          FlutterFlowTheme.of(context).accent4,
+                                      width: 3.0,
+                                    ),
+                                    borderRadius: BorderRadius.circular(8.0),
+                                    hoverColor: FlutterFlowTheme.of(context)
+                                        .secondaryBackground,
+                                    hoverTextColor:
+                                        FlutterFlowTheme.of(context).white,
+                                  ),
+                                ),
+                              ),
+                            ),
                           ),
-                          decoration: const BoxDecoration(
-                            color: Colors.transparent,
-                          ),
-                          alignment: const AlignmentDirectional(0.0, 0.0),
+                        ),
+                        Expanded(
                           child: Align(
                             alignment: const AlignmentDirectional(0.0, 0.0),
                             child: Padding(
                               padding: const EdgeInsetsDirectional.fromSTEB(
-                                  15.0, 0.0, 5.0, 0.0),
+                                  5.0, 0.0, 15.0, 0.0),
                               child: FFButtonWidget(
                                 onPressed: () async {
                                   logFirebaseEvent(
-                                      'TRANSACTIONS_PAGE_START_DATE_BTN_ON_TAP');
+                                      'TRANSACTIONS_PAGE_END_DATE_BTN_ON_TAP');
                                   logFirebaseEvent('Button_date_time_picker');
-                                  final datePicked1Date = await showDatePicker(
+                                  final datePicked2Date = await showDatePicker(
                                     context: context,
-                                    initialDate:
-                                        (functions.todayminus14days() ??
-                                            DateTime.now()),
+                                    initialDate: getCurrentTimestamp,
                                     firstDate: DateTime(1900),
                                     lastDate: DateTime(2050),
                                   );
 
-                                  if (datePicked1Date != null) {
+                                  if (datePicked2Date != null) {
                                     safeSetState(() {
-                                      _model.datePicked1 = DateTime(
-                                        datePicked1Date.year,
-                                        datePicked1Date.month,
-                                        datePicked1Date.day,
+                                      _model.datePicked2 = DateTime(
+                                        datePicked2Date.year,
+                                        datePicked2Date.month,
+                                        datePicked2Date.day,
                                       );
                                     });
                                   }
                                   logFirebaseEvent('Button_update_page_state');
-                                  _model.startDate = _model.datePicked1;
+                                  _model.endDate = _model.datePicked2;
                                   safeSetState(() {});
                                   logFirebaseEvent('Button_update_app_state');
-                                  FFAppState().startdate = _model.datePicked1;
+                                  FFAppState().enddate = _model.datePicked2;
                                   safeSetState(() {});
                                 },
-                                text: 'Start Date',
+                                text: 'End Date',
                                 icon: const Icon(
                                   Icons.date_range,
                                   size: 15.0,
@@ -259,82 +343,8 @@ class _TransactionsWidgetState extends State<TransactionsWidget>
                             ),
                           ),
                         ),
-                      ),
-                      Expanded(
-                        child: Align(
-                          alignment: const AlignmentDirectional(0.0, 0.0),
-                          child: Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                5.0, 0.0, 15.0, 0.0),
-                            child: FFButtonWidget(
-                              onPressed: () async {
-                                logFirebaseEvent(
-                                    'TRANSACTIONS_PAGE_END_DATE_BTN_ON_TAP');
-                                logFirebaseEvent('Button_date_time_picker');
-                                final datePicked2Date = await showDatePicker(
-                                  context: context,
-                                  initialDate: getCurrentTimestamp,
-                                  firstDate: DateTime(1900),
-                                  lastDate: DateTime(2050),
-                                );
-
-                                if (datePicked2Date != null) {
-                                  safeSetState(() {
-                                    _model.datePicked2 = DateTime(
-                                      datePicked2Date.year,
-                                      datePicked2Date.month,
-                                      datePicked2Date.day,
-                                    );
-                                  });
-                                }
-                                logFirebaseEvent('Button_update_page_state');
-                                _model.endDate = _model.datePicked2;
-                                safeSetState(() {});
-                                logFirebaseEvent('Button_update_app_state');
-                                FFAppState().enddate = _model.datePicked2;
-                                safeSetState(() {});
-                              },
-                              text: 'End Date',
-                              icon: const Icon(
-                                Icons.date_range,
-                                size: 15.0,
-                              ),
-                              options: FFButtonOptions(
-                                width: 235.0,
-                                height: 40.0,
-                                padding: const EdgeInsets.all(0.0),
-                                iconPadding: const EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 0.0, 0.0),
-                                color: Colors.transparent,
-                                textStyle: FlutterFlowTheme.of(context)
-                                    .titleSmall
-                                    .override(
-                                      fontFamily: FlutterFlowTheme.of(context)
-                                          .titleSmallFamily,
-                                      color:
-                                          FlutterFlowTheme.of(context).grayIcon,
-                                      letterSpacing: 0.0,
-                                      useGoogleFonts: GoogleFonts.asMap()
-                                          .containsKey(
-                                              FlutterFlowTheme.of(context)
-                                                  .titleSmallFamily),
-                                    ),
-                                elevation: 3.0,
-                                borderSide: BorderSide(
-                                  color: FlutterFlowTheme.of(context).accent4,
-                                  width: 3.0,
-                                ),
-                                borderRadius: BorderRadius.circular(8.0),
-                                hoverColor: FlutterFlowTheme.of(context)
-                                    .secondaryBackground,
-                                hoverTextColor:
-                                    FlutterFlowTheme.of(context).white,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                   Expanded(
                     child: ClipRRect(

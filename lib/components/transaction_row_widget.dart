@@ -93,7 +93,7 @@ class _TransactionRowWidgetState extends State<TransactionRowWidget> {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10.0),
                         border: Border.all(
-                          color: FlutterFlowTheme.of(context).secondary,
+                          color: FlutterFlowTheme.of(context).accent4,
                         ),
                       ),
                       child: SizedBox(
@@ -167,14 +167,13 @@ class _TransactionRowWidgetState extends State<TransactionRowWidget> {
                                                     .titleSmallFamily),
                                       ),
                                   elevation: 1.0,
-                                  borderSide: BorderSide(
-                                    color:
-                                        FlutterFlowTheme.of(context).secondary,
+                                  borderSide: const BorderSide(
+                                    color: Color(0xC934BDB9),
                                     width: 2.0,
                                   ),
                                   borderRadius: BorderRadius.circular(8.0),
-                                  hoverColor:
-                                      FlutterFlowTheme.of(context).accent4,
+                                  hoverColor: FlutterFlowTheme.of(context)
+                                      .secondaryBackground,
                                   hoverBorderSide: BorderSide(
                                     color:
                                         FlutterFlowTheme.of(context).secondary,

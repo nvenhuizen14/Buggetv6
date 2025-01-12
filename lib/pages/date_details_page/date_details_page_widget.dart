@@ -1,7 +1,9 @@
 import '/components/custom_calendar/date_details/date_details_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'date_details_page_model.dart';
 export 'date_details_page_model.dart';
@@ -30,6 +32,17 @@ class _DateDetailsPageWidgetState extends State<DateDetailsPageWidget> {
 
     logFirebaseEvent('screen_view',
         parameters: {'screen_name': 'DateDetailsPage'});
+    // On page load action.
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      logFirebaseEvent('DATE_DETAILS_DateDetailsPage_ON_INIT_STA');
+      logFirebaseEvent('DateDetailsPage_update_page_state');
+      _model.timeSegments = functions
+          .generateTimeSegments(widget.selectedDate!, 1)
+          .toList()
+          .cast<DateTime>();
+      safeSetState(() {});
+    });
+
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
@@ -123,6 +136,7 @@ class _DateDetailsPageWidgetState extends State<DateDetailsPageWidget> {
                                 updateCallback: () => safeSetState(() {}),
                                 child: DateDetailsWidget(
                                   selectedDate: widget.selectedDate,
+                                  timeSegments: _model.timeSegments,
                                 ),
                               ),
                             ),

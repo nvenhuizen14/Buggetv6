@@ -7,11 +7,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'custom_calendar_model.dart';
-export 'custom_calendar_model.dart';
+import 'my_custom_calendar_model.dart';
+export 'my_custom_calendar_model.dart';
 
-class CustomCalendarWidget extends StatefulWidget {
-  const CustomCalendarWidget({
+class MyCustomCalendarWidget extends StatefulWidget {
+  const MyCustomCalendarWidget({
     super.key,
     required this.inputDate,
     this.initialSelectedDate,
@@ -23,11 +23,11 @@ class CustomCalendarWidget extends StatefulWidget {
   final Future Function(DateTime? selectedDate)? onSelectDateAction;
 
   @override
-  State<CustomCalendarWidget> createState() => _CustomCalendarWidgetState();
+  State<MyCustomCalendarWidget> createState() => _MyCustomCalendarWidgetState();
 }
 
-class _CustomCalendarWidgetState extends State<CustomCalendarWidget> {
-  late CustomCalendarModel _model;
+class _MyCustomCalendarWidgetState extends State<MyCustomCalendarWidget> {
+  late MyCustomCalendarModel _model;
 
   @override
   void setState(VoidCallback callback) {
@@ -38,16 +38,16 @@ class _CustomCalendarWidgetState extends State<CustomCalendarWidget> {
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => CustomCalendarModel());
+    _model = createModel(context, () => MyCustomCalendarModel());
 
     // On component load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      logFirebaseEvent('CUSTOM_CALENDAR_CustomCalendar_ON_INIT_S');
-      logFirebaseEvent('CustomCalendar_update_component_state');
+      logFirebaseEvent('MY_CUSTOM_CALENDAR_MyCustomCalendar_ON_I');
+      logFirebaseEvent('MyCustomCalendar_update_component_state');
       _model.inputDate = widget.inputDate;
       safeSetState(() {});
       if (widget.initialSelectedDate != null) {
-        logFirebaseEvent('CustomCalendar_update_component_state');
+        logFirebaseEvent('MyCustomCalendar_update_component_state');
         _model.selectedDate = widget.initialSelectedDate;
         safeSetState(() {});
       }
@@ -157,7 +157,7 @@ class _CustomCalendarWidgetState extends State<CustomCalendarWidget> {
                           ),
                           onPressed: () async {
                             logFirebaseEvent(
-                                'CUSTOM_CALENDAR_longArrowAltLeft_ICN_ON_');
+                                'MY_CUSTOM_CALENDAR_longArrowAltLeft_ICN_');
                             logFirebaseEvent(
                                 'IconButton_update_component_state');
                             _model.inputDate = functions
@@ -176,7 +176,7 @@ class _CustomCalendarWidgetState extends State<CustomCalendarWidget> {
                           ),
                           onPressed: () async {
                             logFirebaseEvent(
-                                'CUSTOM_CALENDAR_longArrowAltRight_ICN_ON');
+                                'MY_CUSTOM_CALENDAR_longArrowAltRight_ICN');
                             logFirebaseEvent(
                                 'IconButton_update_component_state');
                             _model.inputDate = functions
@@ -303,7 +303,7 @@ class _CustomCalendarWidgetState extends State<CustomCalendarWidget> {
                             highlightColor: Colors.transparent,
                             onTap: () async {
                               logFirebaseEvent(
-                                  'CUSTOM_CALENDAR_Container_r6dntyw1_ON_TA');
+                                  'MY_CUSTOM_CALENDAR_Container_r6dntyw1_ON');
                               logFirebaseEvent(
                                   'Container_update_component_state');
                               _model.selectedDate = calendarItem.calendarDate;
@@ -315,7 +315,7 @@ class _CustomCalendarWidgetState extends State<CustomCalendarWidget> {
                             },
                             onLongPress: () async {
                               logFirebaseEvent(
-                                  'CUSTOM_CALENDAR_Container_r6dntyw1_ON_LO');
+                                  'MY_CUSTOM_CALENDAR_Container_r6dntyw1_ON');
                               logFirebaseEvent(
                                   'Container_update_component_state');
                               _model.selectedDate = calendarItem.calendarDate;
